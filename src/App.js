@@ -1,24 +1,41 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+let stateValue;
+
+function useState(intialState) {
+
+  if(stateValue === undefined){
+    stateValue = intialState;
+  }
+  function setValue(value) {
+    stateValue=value;
+    // sau khi state thay đổi render thay đổi
+    ReactDOM.createRoot(document.getElementById('root')).render(
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    );
+  }
+  return [stateValue,setValue];
+}
 
 function App() {
+  const [counter, setCouter]=useState(1);
+
+  const handleIncrement = function(){
+    setCouter(counter+1);
+  }
+  const handleDecrement = function(){
+    setCouter(counter-1);
+  }
   return (
     <div className="App">
-
-        {/* <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a> */}
-        <h1>hello word</h1>
-
+      <h1>Counter {counter}</h1>
+      <button onClick={handleIncrement}>Increment</button>
+      <button onClick={handleDecrement}>Decrement</button>
     </div>
   );
 }
